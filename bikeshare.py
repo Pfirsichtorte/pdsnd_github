@@ -23,12 +23,12 @@ def get_filters():
     for city in CITY_DATA:
         possible_cities.append(city.lower())
     possible_cities_str = ", ".join(possible_cities)
+    possible_cities.append('all')
     wrong_input = True
     city = ''
     while wrong_input:
         try:
             city = str(input("\nPlease select a city or 'all'. Possible cities are: "+possible_cities_str.title()+"\n"))
-            possible_cities.append('all')
             wrong_input = city.lower().rstrip() not in possible_cities
         except Exception as e:
             print("Exception occurred: {}".format(e))
