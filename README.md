@@ -1,17 +1,10 @@
->**Note**: Please **fork** the current Udacity repository so that you will have a **remote** repository in **your** Github account. Clone the remote repository to your local machine. Later, as a part of the project "Post your Work on Github", you will push your proposed changes to the remote repository in your Github account.
-
-### Date created
-Include the date you created this project and README file.
-
-### Project Title
-Replace the Project Title
+### pdsnd_github
 
 ### Description
-Describe what your project is about and what it does
+The project provides an interactive console application with the help of which the user can analyze the data of the company Motivate filtered by city, month and day of the week. It is used to derive key figures of the business and to draw an economic benefit from the data.
 
 ### Files used
-Include the files used
+The files used are bikeshare.py and the files for the data of the respective cities. These files are required for the program, but are not included in this repo
 
 ### Credits
-It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
-
+https://motivateco.com/
