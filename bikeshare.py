@@ -35,7 +35,7 @@ def get_filters():
     city = city.lower().rstrip().replace(' ','_')
     wrong_input = True
 
-    # get user input for month (all, january, february, ... , december). Return it in lowercase
+    # get user input for month (all, january, february, ... , december). Return it in lowercase.
     possible_months = ['all','january','february','march','april','mai','june','july','august','september','october','november','december']
     month = ''
     while wrong_input:
@@ -47,7 +47,7 @@ def get_filters():
     month = month.lower().rstrip()
     wrong_input = True
 
-    # get user input for day of week (all, monday, tuesday, ... sunday). Return it in lowercase
+    # get user input for day of week (all, monday, tuesday, ... sunday). Return it in lowercase.
     possible_days = ['all','monday','tuesday','wednesday','thursday','friday','saturday','sunday']
     day = ''
     while wrong_input:
@@ -73,7 +73,7 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-    # get data from necessary files
+    # Get data from necessary files. Distinguish between all files or a single file.
     df = pd.DataFrame()
     if(city=='all'):
         for place in CITY_DATA:
@@ -89,12 +89,12 @@ def load_data(city, month, day):
 
     df['Start Time'] = pd.to_datetime(df['Start Time'])
 
-    #filter by month if necessary
+    #Filter by month if necessary.
     if month!='all':
         months = ['january','february','march','april','mai','june','july','august','september','october','november','december']
         df = df[df['Start Time'].dt.month==months.index(month)+1]
 
-    #filter by weekday if necessary
+    #Filter by weekday if necessary.
     if day!='all':
         days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
         df = df[df['Start Time'].dt.day==days.index(day)+1]
@@ -109,25 +109,25 @@ def time_stats(df):
     start_time = time.time()
 
     try:
-        # display the most common month and it amount
+        # Display the most common month and it amount.
         most_common_month_name = df['Start Time'].dt.month.mode()[0]
         months = ['january','february','march','april','mai','june','july','august','september','october','november','december']
         most_common_month_name = months[most_common_month_name-1].title()
         most_common_month_count = str(df['Start Time'].dt.month.value_counts().max())
         print("The most frequent month of the trips is "+most_common_month_name+" with "+most_common_month_count+" performed trips.")
 
-        # display the most common day of week and it amount
+        # Display the most common day of week and it amount.
         most_common_day_name = df['Start Time'].dt.day.mode()[0]%7
         days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday']
         most_common_day_name = days[most_common_day_name].title()
         most_common_day_count = str(df['Start Time'].dt.day.value_counts().max())
         print("The most common day of the week for trips is "+most_common_day_name+" with "+most_common_day_count+" trips made.")
 
-        # display the most common start hour and it amount
+        # Display the most common start hour and it amount.
         most_common_hour_name = str(df['Start Time'].dt.hour.mode()[0])
         most_common_hour_count = str(df['Start Time'].dt.hour.value_counts().max())
         print("The most common starting hour of the trips is "+most_common_hour_name+" with "+most_common_hour_count+" trips performed.")
-    # If there is not enough data to determine the statistics
+    # If there is not enough data to determine the statistics.
     except KeyError:
         print("For the specified filter there is not enough data available to evaluate the time data")
 
@@ -142,22 +142,22 @@ def station_stats(df):
     start_time = time.time()
 
     try:
-        # display most commonly used start station and it amount
+        # Display most commonly used start station and it amount.
         most_common_start_station_name = df['Start Station'].mode()[0]
         most_common_start_station_count = str(df['Start Station'].value_counts().max())
         print("The most frequent station to start is '"+most_common_start_station_name+"' with "+most_common_start_station_count+" started trips.")
 
-        # display most commonly used end station and it amount
+        # Display most commonly used end station and it amount.
         most_common_end_station_name = df['End Station'].mode()[0]
         most_common_end_station_count = str(df['End Station'].value_counts().max())
         print("The most frequent station to the end is '"+most_common_end_station_name+"' with "+most_common_end_station_count+" trips completed.")
 
-        # display most frequent combination of start station and end station trip and it amount
+        # Display most frequent combination of start station and end station trip and it amount.
         df['Start To End Station'] = df['Start Station']+" to "+df['End Station']
         most_common_combination_name = df['Start To End Station'].mode()[0]
         most_common_combination_count = str(df['Start To End Station'].value_counts().max())
         print("The most frequent combination of start and end station is "+most_common_combination_name+" with "+most_common_combination_count+" cases.")
-    # If there is not enough data to determine the statistics
+    # If there is not enough data to determine the statistics.
     except KeyError:
         print("There is not enough data available for the specified filter to evaluate the station data.")
 
@@ -172,16 +172,16 @@ def trip_duration_stats(df):
     start_time = time.time()
 
     try:
-        # display total travel time
+        # Display total travel time.
         total_travel_time = str(df['Trip Duration'].sum())
         print("The total trip duration is "+total_travel_time+".")
 
-        # display mean travel time
+        # Display mean travel time.
         mean_travel_time = str(df['Trip Duration'].mean())
         if mean_travel_time == 'nan':
             mean_travel_time = "0"
         print("The average trip duration is "+mean_travel_time+".")
-    # If there is not enough data to determine the statistics
+    # If there is not enough data to determine the statistics.
     except KeyError:
         print("There is not enough data available for the specified filter to evaluate the trip data.")
 
@@ -196,22 +196,22 @@ def user_stats(df):
     start_time = time.time()
 
     try:
-        # Display counts of user types
+        # Display counts of user types.
         print(df.groupby(['User Type'])['User Type'].count())
         print("\n")
 
-        # Display counts of gender
+        # Display counts of gender.
         print(df.groupby(['Gender'])['Gender'].count())
         print("\n")
 
-        # Display earliest, most recent, and most common year of birth and it amount
+        # Display earliest, most recent, and most common year of birth and it amount.
         earliest_birth_year = str(df['Birth Year'].min())
         latest_birth_year = str(df['Birth Year'].max())
         most_comman_birth_year_name = str(df['Birth Year'].mode()[0])
         most_comman_birth_year_count = str(df['Birth Year'].value_counts().max())
         print("The earliest year of birth is "+earliest_birth_year+" and the latest is "+latest_birth_year+".")
         print("The most frequent birth year is "+most_comman_birth_year_name+"with "+most_comman_birth_year_count+" cases.")
-    # If there is not enough data to determine the statistics
+    # If there is not enough data to determine the statistics.
     except KeyError:
         print("For the specified filter there is not enough data available to evaluate the user data.")
 
@@ -221,17 +221,17 @@ def user_stats(df):
 
 def main():
     while True:
-        #load data
+        # Load data.
         city, month, day = get_filters()
         df = load_data(city, month, day)
 
-        # print statistics if possible
+        # Print statistics if possible.
         time_stats(df)
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
 
-        # show raw data if possible
+        # Show raw data if possible.
         new_data = True
         row = 0
         while new_data:
@@ -251,7 +251,7 @@ def main():
         print('-'*40)
         new_data = True
 
-        # ask for restart
+        # Ssk for restart.
         print("\nThe last filter was city: {}, month:{}, weekday:{}.".format(city,month,day))
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower().rstrip() != 'yes':
