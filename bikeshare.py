@@ -80,8 +80,8 @@ def load_data(city, month, day):
             place = place.replace(" ","_")
             f = open(place+'.csv')
             df_single = pd.read_csv(f)
-            df = pd.concat([df,df_single],sort=False)
             f.close()
+            df = pd.concat([df,df_single],sort=False)
     else:
         f = open(city+'.csv')
         df = pd.read_csv(f)
